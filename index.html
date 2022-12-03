@@ -34,15 +34,45 @@
     </div>
     <div class="field-container"></div>
     <div class="button-container">
-      <button class="exit-game" onclick="exitGame()">
+      <button class="exit-game" data-modal="modal-one">
         Baigti žaidimo sesiją
       </button>
-      <button class="reset-game" onclick="resetGame()">
+      <button class="reset-game" data-modal="modal-two">
         Ištrinti lentelę
       </button>
-      <button class="reset-score" onclick="resetScore()">
+      <button class="reset-score" data-modal="modal-three">
         Ištrinti sesijos rezultatą
       </button>
+    </div>
+  </div>
+  <div class="modal" id="modal-one">
+    <div class="modal-bg modal-exit"></div>
+    <div class="modal-container">
+      <h1>Ar tikrai norite baigti žaidimo sesiją?</h1>
+      <button class="modal-exit exit-game" onclick="exitGame()">
+        Patvirtinti
+      </button>
+      <div class="modal-close modal-exit">X</div>
+    </div>
+  </div>
+  <div class="modal" id="modal-two">
+    <div class="modal-bg modal-exit"></div>
+    <div class="modal-container">
+      <h1>Ar tikrai norite ištrinti lentelę?</h1>
+      <button class="modal-exit exit-game" onclick="resetGame()">
+        Patvirtinti
+      </button>
+      <div class="modal-close modal-exit">X</div>
+    </div>
+  </div>
+  <div class="modal" id="modal-three">
+    <div class="modal-bg modal-exit"></div>
+    <div class="modal-container">
+      <h1>Ar tikrai norite ištrinti sesijos rezultatą?</h1>
+      <button class="modal-exit exit-game" onclick="resetScore()">
+        Patvirtinti
+      </button>
+      <div class="modal-close modal-exit">X</div>
     </div>
   </div>
 </body>
