@@ -47,7 +47,7 @@ function handleFieldClick() {
   this.removeEventListener("click", handleFieldClick);
   this.classList.remove("active-field");
 
-  validateResults();
+  validateResults(false);
   updateSessionStorage();
 
   currentPlayer = !currentPlayer;
@@ -63,7 +63,7 @@ function makeInactive() {
 }
 
 // checks for draw or winning
-function validateResults() {
+function validateResults(loading) {
   let won = false;
   for (let i = 0; i <= 7; i++) {
     const winCondition = winningConditions[i];
@@ -83,7 +83,7 @@ function validateResults() {
 
   // detect winning
   if (won) {
-    handleWin();
+    handleWin(loading);
     return;
   }
 
@@ -129,12 +129,12 @@ function createGrid() {
   document.querySelector(".game-container").classList.remove("hidden");
 }
 
-function handleWin() {
+function handleWin(loading) {
   currentPlayer
     ? addPlayAgainMessage(`${players[0].name} laimėjo!`)
     : addPlayAgainMessage(`${players[1].name} laimėjo!`);
   makeInactive();
-  currentPlayer ? players[0].score++ : players[1].score++;
+  if (!loading) currentPlayer ? players[0].score++ : players[1].score++;
   setPlayerNames();
 }
 
@@ -209,7 +209,7 @@ function loadFromSessionStorage() {
         field.classList.remove("active-field");
       }
     });
-    validateResults();
+    validateResults(true);
   } else {
     document.querySelector(".menu").classList.remove("hidden");
   }
