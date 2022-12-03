@@ -101,30 +101,30 @@ function getPlayerInfo() {
   document.querySelector(".game-container").classList.remove("hidden");
 }
 
-function toggleAnotherGameButton() {
-  if (document.querySelector(".another-game")) {
-    document.querySelector(".another-game").remove();
-    const button = document.createElement("button");
-    button.classList.add("reset-game");
-    button.innerText = "Reset game";
-    button.addEventListener("click", resetGame);
-    gameContainer.appendChild(button);
-  } else {
-    document.querySelector(".reset-game").remove();
-    const button = document.createElement("button");
-    button.classList.add("another-game");
-    button.innerText = "Play another game";
-    button.addEventListener("click", resetGame);
-    gameContainer.appendChild(button);
-  }
-}
+// function toggleAnotherGameButton() {
+//   if (document.querySelector(".another-game")) {
+//     document.querySelector(".another-game").remove();
+//     const button = document.createElement("button");
+//     button.classList.add("reset-game");
+//     button.innerText = "Reset game";
+//     button.addEventListener("click", resetGame);
+//     gameContainer.appendChild(button);
+//   } else {
+//     document.querySelector(".reset-game").remove();
+//     const button = document.createElement("button");
+//     button.classList.add("another-game");
+//     button.innerText = "Play another game";
+//     button.addEventListener("click", resetGame);
+//     gameContainer.appendChild(button);
+//   }
+// }
 
 function handleWin() {
   alert("You have won!");
   makeInactive();
   currentPlayer ? players[0].score++ : players[1].score++;
   setPlayerNames();
-  toggleAnotherGameButton();
+  // toggleAnotherGameButton();
 }
 
 function setPlayerNames() {
