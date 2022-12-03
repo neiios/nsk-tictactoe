@@ -177,6 +177,7 @@ function exitGame() {
   document.querySelector(".menu").classList.remove("hidden");
   document.querySelectorAll(".field").forEach((field) => field.remove());
   removePlayAgainMessage();
+  gameState = ["", "", "", "", "", "", "", "", ""];
   players = [
     { name: "", score: 0 },
     { name: "", score: 0 },
