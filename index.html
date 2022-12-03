@@ -14,7 +14,18 @@
 </head>
 
 <body class="main-container">
-  <div class="game-container"></div>
+  <div class="menu">
+    <div class="menu-element">
+      <label for="player1">Enter player 1 name:</label>
+      <input id="player1" type="text" />
+    </div>
+    <div class="menu-element">
+      <label for="player2">Enter player 2 name:</label>
+      <input id="player2" type="text" />
+    </div>
+    <button id="submit-player-info" onclick="getPlayerInfo()">Submit</button>
+  </div>
+  <div class="game-container hidden"></div>
 </body>
 
 </html>

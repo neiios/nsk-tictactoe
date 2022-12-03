@@ -20,6 +20,8 @@ const winningConditions = [
 
 // creates fields
 function createFields() {
+  document.querySelector(".game-container").classList.remove("hidden");
+
   for (let i = 0; i < fieldSize * fieldSize; i++) {
     const field = document.createElement("button");
     field.addEventListener("click", handleFieldClick);
@@ -32,7 +34,7 @@ function createFields() {
 // click handler
 function handleFieldClick() {
   if (currentPlayer) {
-    this.innerHTML = `<i class="icon fa-sharp fa-solid fa-xmark"></i>`;
+    this.innerHTML = `<i class="icon fa-solid fa-x"></i>`;
     gameState[parseInt(this.id)] = "X";
   } else {
     this.innerHTML = `<i class="icon fa-regular fa-circle"></i>`;
@@ -90,5 +92,7 @@ function validateResults() {
   }
 }
 
-// call functions
-createFields();
+function getPlayerInfo() {
+  document.querySelector(".menu").classList.add("hidden");
+  createFields();
+}
