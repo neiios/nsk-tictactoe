@@ -141,6 +141,10 @@ function handleWin() {
 function setPlayerNames() {
   players[0].name = document.getElementById("player1").value;
   players[1].name = document.getElementById("player2").value;
+
+  if (players[0].name === "") players[0].name = "Žaidėjas1";
+  if (players[1].name === "") players[1].name = "Žaidėjas2";
+
   document.getElementById("scoreboard").innerText =
     players[0].name +
     " (X) " +
