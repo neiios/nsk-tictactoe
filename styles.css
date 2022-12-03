@@ -10,13 +10,6 @@
   --grid-size: 3;
 }
 
-@media (max-width: 600px) {
-  :root {
-    --cell-size: 100px;
-    --main-container-size: 300px;
-  }
-}
-
 body {
   display: flex;
   align-items: center;
@@ -27,13 +20,20 @@ body {
   margin: 0;
 }
 
+.game-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .field-container {
   display: grid;
   width: var(--main-container-size);
   height: var(--main-container-size);
   grid-template-columns: repeat(var(--grid-size), var(--cell-size));
   grid-auto-rows: 1fr;
-  grid-gap: 5px;
+  grid-gap: 1px;
   background-color: black;
 }
 
@@ -54,6 +54,28 @@ body {
   justify-content: center;
 }
 
+.menu {
+  max-width: 30rem;
+  font-size: 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  border: 1px solid black;
+  padding: 0 2rem 2rem 2rem;
+}
+
+.menu-element {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.menu-element > button,
+input {
+  border: 1px solid black;
+  padding: 0.4rem;
+  font-size: 1rem;
+}
+
 .active-field {
   cursor: pointer;
 }
@@ -72,4 +94,91 @@ body {
 
 .hidden {
   display: none !important;
+}
+
+.animation-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.animated-icon {
+  position: relative;
+  animation: backandforth 2s ease-in-out 0s;
+  animation-iteration-count: infinite;
+}
+
+.animated-icon-reversed {
+  position: relative;
+  animation: backandforth-reversed 2s ease-in-out 0s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes backandforth {
+  0% {
+    left: 0px;
+  }
+  50% {
+    left: 20px;
+  }
+  100% {
+    left: 0px;
+  }
+}
+
+@keyframes backandforth-reversed {
+  0% {
+    right: 0px;
+  }
+  50% {
+    right: 20px;
+  }
+  100% {
+    right: 0px;
+  }
+}
+.play-again-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.play-again-container > h2 {
+  font-size: 1.1rem;
+}
+
+.button-container {
+  margin: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+button {
+  border-radius: none;
+  border: 1px solid black;
+  padding: 0.5rem;
+}
+
+@media (max-width: 640px) {
+  :root {
+    --cell-size: 100px;
+    --main-container-size: 300px;
+  }
+
+  .button-container {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+  }
+
+  .menu {
+    font-size: 1rem;
+  }
 }

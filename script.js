@@ -1,6 +1,7 @@
 const gameContainer = document.querySelector(".game-container");
 const fieldContainer = document.querySelector(".field-container");
 const fieldSize = 3;
+const sessionStorageElCount = 3;
 
 let players = [
   { name: "", score: 0 },
@@ -47,6 +48,8 @@ function handleFieldClick() {
   this.classList.remove("active-field");
 
   validateResults();
+  updateSessionStorage();
+
   currentPlayer = !currentPlayer;
 }
 
@@ -87,44 +90,52 @@ function validateResults() {
   // detect draw
   let draw = !gameState.includes("");
   if (draw) {
-    alert("Draw!");
-    handleDraw();
+    addPlayAgainMessage("Žaidimas baigėsi lygiosiomis!");
     makeInactive();
     return;
   }
 }
 
+function addPlayAgainMessage(result) {
+  if (document.querySelector(".play-again-container")) return;
+  const gameInfo = document.querySelector(".game-info");
+  const div = document.createElement("div");
+  div.classList.add("play-again-container");
+  div.innerHTML = `
+        <h2 id="play-again-message">${result}</h2>
+        <div class="animation-container">
+          <i class="animated-icon fa-sharp fa-solid fa-arrow-right"></i>
+          <button class="play-again-button" onclick="resetGame()">Žaisti dar kartą</button>
+          <i class="animated-icon-reversed fa-sharp fa-solid fa-arrow-left"></i>
+        </div>
+`;
+  gameInfo.appendChild(div);
+}
+
+function removePlayAgainMessage() {
+  if (document.querySelector(".play-again-container"))
+    document.querySelector(".play-again-container").remove();
+}
+
 function getPlayerInfo() {
   document.querySelector(".menu").classList.add("hidden");
+  createGrid();
+  updateSessionStorage();
+}
+
+function createGrid() {
   setPlayerNames();
   createFields();
   document.querySelector(".game-container").classList.remove("hidden");
 }
 
-// function toggleAnotherGameButton() {
-//   if (document.querySelector(".another-game")) {
-//     document.querySelector(".another-game").remove();
-//     const button = document.createElement("button");
-//     button.classList.add("reset-game");
-//     button.innerText = "Reset game";
-//     button.addEventListener("click", resetGame);
-//     gameContainer.appendChild(button);
-//   } else {
-//     document.querySelector(".reset-game").remove();
-//     const button = document.createElement("button");
-//     button.classList.add("another-game");
-//     button.innerText = "Play another game";
-//     button.addEventListener("click", resetGame);
-//     gameContainer.appendChild(button);
-//   }
-// }
-
 function handleWin() {
-  alert("You have won!");
+  currentPlayer
+    ? addPlayAgainMessage(`${players[0].name} laimėjo!`)
+    : addPlayAgainMessage(`${players[1].name} laimėjo!`);
   makeInactive();
   currentPlayer ? players[0].score++ : players[1].score++;
   setPlayerNames();
-  // toggleAnotherGameButton();
 }
 
 function setPlayerNames() {
@@ -146,15 +157,58 @@ function resetGame() {
   currentPlayer = true;
   gameState = ["", "", "", "", "", "", "", "", ""];
   createFields();
+  removePlayAgainMessage();
+  updateSessionStorage();
+}
+
+function resetScore() {
+  players[0].score = 0;
+  players[1].score = 0;
+  setPlayerNames();
+  updateSessionStorage();
 }
 
 function exitGame() {
   document.querySelector(".game-container").classList.add("hidden");
   document.querySelector(".menu").classList.remove("hidden");
   document.querySelectorAll(".field").forEach((field) => field.remove());
+  removePlayAgainMessage();
   players = [
     { name: "", score: 0 },
     { name: "", score: 0 },
   ];
   currentPlayer = true;
+  sessionStorage.clear();
 }
+
+function updateSessionStorage() {
+  sessionStorage.setItem("players", JSON.stringify(players));
+  sessionStorage.setItem("currentPlayer", JSON.stringify(currentPlayer));
+  sessionStorage.setItem("gameState", JSON.stringify(gameState));
+}
+
+function loadFromSessionStorage() {
+  if (sessionStorage.length === sessionStorageElCount) {
+    removePlayAgainMessage();
+    players = JSON.parse(sessionStorage.getItem("players"));
+    currentPlayer = JSON.parse(sessionStorage.getItem("currentPlayer"));
+    gameState = JSON.parse(sessionStorage.getItem("gameState"));
+    createGrid();
+    document.querySelectorAll(".field").forEach((field) => {
+      if (gameState[parseInt(field.id)] === "X") {
+        field.innerHTML = `<i class="icon fa-solid fa-x"></i>`;
+        field.removeEventListener("click", handleFieldClick);
+        field.classList.remove("active-field");
+      } else if (gameState[parseInt(field.id)] === "O") {
+        field.innerHTML = `<i class="icon fa-regular fa-circle"></i>`;
+        field.removeEventListener("click", handleFieldClick);
+        field.classList.remove("active-field");
+      }
+    });
+    validateResults();
+  } else {
+    document.querySelector(".menu").classList.remove("hidden");
+  }
+}
+
+loadFromSessionStorage();
