@@ -58,6 +58,7 @@ body {
   max-width: 30rem;
   font-size: 1.5rem;
   display: grid;
+  gap: 1rem;
   grid-template-columns: 1fr;
   border: 1px solid black;
   padding: 0 2rem 2rem 2rem;
@@ -65,10 +66,6 @@ body {
 
 .player-data-header {
   margin-bottom: 0;
-}
-
-.menu:not(:first-child) {
-  gap: 1rem;
 }
 
 .menu-element {
