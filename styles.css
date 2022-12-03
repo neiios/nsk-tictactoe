@@ -59,9 +59,16 @@ body {
   font-size: 1.5rem;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1rem;
   border: 1px solid black;
   padding: 0 2rem 2rem 2rem;
+}
+
+.player-data-header {
+  margin-bottom: 0;
+}
+
+.menu:not(:first-child) {
+  gap: 1rem;
 }
 
 .menu-element {
